@@ -9,7 +9,7 @@ client.on("message", function(message) {
     
     // React on mention
     if (/<@!bot_id>|<@bot_id>/.test(message.content)) {
-        return message.channel.send(`Hey! Feel free to use me with the prefix ${prefix}. Try to learn more about me with ${prefix}help.`);
+        return message.channel.send(`¡Hola! Siéntete libre de usarme con el prefijo ${prefix}. Puedes aprender más sobre mi con ${prefix}help.`);
     }
 
     if (!message.content.startsWith(prefix)) return; // Avoid reading messages that does NOT start with the prefix
@@ -22,7 +22,7 @@ client.on("message", function(message) {
     // Ping
     if (command === "ping") {
         const timeTaken = Date.now() - message.createdTimestamp;
-        message.channel.send(`Pong! There is a latency of ${timeTaken}ms between Discord and this bot!`);
+        message.channel.send(`¡Pong! ¡Hay una latencia de ${timeTaken}ms entre Discord y este bot!`);
     } 
     // Help
     else if (command === "help") {
@@ -30,9 +30,9 @@ client.on("message", function(message) {
         if (args[0] == null){
             var helpEmbed = new Discord.MessageEmbed()
                 .setColor('#0099ff')
-                .setTitle('disCal')
+                .setTitle('EzBot')
                 .setURL('https://github.com/JesusSePe/')
-                .setDescription('Welcome to Calbot, the helpful Discord calendar bot!')
+                .setDescription('¡Bienvenido a EzCal, el bot calendario simple!')
                 .addFields(
                     { name: 'utility', value:`${prefix} help utility`},
                 )
@@ -43,12 +43,12 @@ client.on("message", function(message) {
         else if (args[0] === "utility"){
             var helpEmbed = new Discord.MessageEmbed()
                 .setColor('#0099ff')
-                .setTitle('disCal')
+                .setTitle('EzBot')
                 .setURL('https://github.com/JesusSePe/')
                 .setDescription('Utility')
                 .addFields(
-                    { name: `${prefix} ping`, value:'Returns the delay between the Discord API and this bot.'},
-                    { name: `${prefix} help`, value:'Returns all commands grouped by different sections.'}
+                    { name: `${prefix} ping`, value:'Devuelve la latencia entre la API de Discord y este bot.'},
+                    { name: `${prefix} help`, value:'Devuelve todos los comandos agrupados por secciones.'}
                 )
                 .setTimestamp()
                 .setFooter('discal');
