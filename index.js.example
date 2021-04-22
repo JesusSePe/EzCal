@@ -1,0 +1,61 @@
+const Discord = require("discord.js");
+const config = require("./config.json");
+const client = new Discord.Client(); // Connect to Discord
+const prefix = "~cal ";
+
+
+client.on("message", function(message) {
+    if (message.author.bot) return; // Avoid reading messages from bots
+    
+    // React on mention
+    if (/<@!bot_id>|<@bot_id>/.test(message.content)) {
+        return message.channel.send(`Hey! Feel free to use me with the prefix ${prefix}. Try to learn more about me with ${prefix}help.`);
+    }
+
+    if (!message.content.startsWith(prefix)) return; // Avoid reading messages that does NOT start with the prefix
+
+    const commandBody = message.content.slice(prefix.length); // Save on commandBody the whole command, without prefix
+    const args = commandBody.split(' '); // Save on args the different parts of the command
+    const command = args.shift().toLowerCase(); // Delete first item on args and convert to lowecase the whole command.
+
+    // COMMANDS
+    // Ping
+    if (command === "ping") {
+        const timeTaken = Date.now() - message.createdTimestamp;
+        message.channel.send(`Pong! There is a latency of ${timeTaken}ms between Discord and this bot!`);
+    } 
+    // Help
+    else if (command === "help") {
+        // No arguments
+        if (args[0] == null){
+            var helpEmbed = new Discord.MessageEmbed()
+                .setColor('#0099ff')
+                .setTitle('disCal')
+                .setURL('https://github.com/JesusSePe/')
+                .setDescription('Welcome to Calbot, the helpful Discord calendar bot!')
+                .addFields(
+                    { name: 'utility', value:`${prefix} help utility`},
+                )
+                .setTimestamp()
+                .setFooter('discal');
+        } 
+        // Utility
+        else if (args[0] === "utility"){
+            var helpEmbed = new Discord.MessageEmbed()
+                .setColor('#0099ff')
+                .setTitle('disCal')
+                .setURL('https://github.com/JesusSePe/')
+                .setDescription('Utility')
+                .addFields(
+                    { name: `${prefix} ping`, value:'Returns the delay between the Discord API and this bot.'},
+                    { name: `${prefix} help`, value:'Returns all commands grouped by different sections.'}
+                )
+                .setTimestamp()
+                .setFooter('discal');
+        }
+        message.channel.send(helpEmbed);
+    }
+    
+});
+
+client.login(config.BOT_TOKEN); // Login into the Discord bot
