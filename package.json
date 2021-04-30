@@ -1,6 +1,6 @@
 {
-  "name": "discal",
-  "version": "0.0.1",
+  "name": "ezcal",
+  "version": "0.2",
   "description": "Calendar bot for Discord",
   "main": "index.js",
   "scripts": {
@@ -9,6 +9,10 @@
   "author": "JesusSePe",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^12.5.1"
+    "dateformat": "^4.5.1",
+    "discord.js": "^12.5.1",
+    "mysql2": "^2.2.5",
+    "node-schedule": "^2.0.0",
+    "string-sanitizer": "^1.1.1"
   }
 }
