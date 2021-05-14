@@ -13,8 +13,9 @@ module.exports = {
                 let server = row.server_id;
                 var EventEmbed = new Discord.MessageEmbed()
                     .setColor('#0099ff')
-                    .setTitle(`${name}`)
-                    .setDescription(`${description}`);
+                    .setTitle(`Recordatorio del evento: ${name}`)
+                    .setDescription(`Descripción: ${description}`)
+                    .setFooter('Has recibido este mensaje ya que añadiste este evento.');
                 client.channels.fetch(`${row.channel_id}`)
                     .catch() //In case Discord's API fails
                     .then(channel => channel.send(EventEmbed).catch()); //Catch error in case bot can't send message
@@ -22,8 +23,9 @@ module.exports = {
             else {
                 var EventEmbed = new Discord.MessageEmbed()
                     .setColor('#0099ff')
-                    .setTitle(`${name}`)
-                    .setDescription(`${description}`);
+                    .setTitle(`Recordatorio del evento: ${name}`)
+                    .setDescription(`Descripción: ${description}`)
+                    .setFooter('Has recibido este mensaje ya que añadiste este evento.');
                 client.users.fetch(`${row.user}`)
                     .catch() //In case Discord's API fails
                     .then(user => user.send(EventEmbed).catch()); //Catch error in case bot can't send message on DMs

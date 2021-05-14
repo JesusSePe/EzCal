@@ -1,6 +1,6 @@
 {
   "name": "ezcal",
-  "version": "0.2",
+  "version": "1.0",
   "description": "Calendar bot for Discord",
   "main": "index.js",
   "scripts": {

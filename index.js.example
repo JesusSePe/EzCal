@@ -8,7 +8,7 @@ const dateFormat = require("dateformat"); // Dateformat package
 
 // Multiple variables
 const prefix = "!cal ";
-const ver = "0.2";
+const ver = "1.0";
 const inv = "https://discord.com/"; // Your discord's bot invite link
 
 
@@ -29,8 +29,10 @@ const pool = mysql.createPool({
 const promisePool = pool.promise();
 
 client.on("ready", () => {
-    client.user.setActivity("Making your life easier", {type: "PLAYING"});
+    let servers = client.guilds.cache.size;
+    client.user.setActivity(`Ayudando en ${servers} servidores`, {type: "PLAYING"});
     pool.query("SELECT * FROM events where eventDate > sysdate()", function(err, rows, fields){
+        if (err) {return;}
         rows.forEach(row => {
             schedule.scheduler(row, client);
         });
@@ -82,11 +84,6 @@ client.on("message", async function(message) {
     // Show events
     else if (command === "events") {
         commands.events(message, promisePool);
-    }
-
-    // Test
-    else if (command === "test") {
-        //commands.test(message);
     }
 
     // Help

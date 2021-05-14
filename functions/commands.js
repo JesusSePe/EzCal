@@ -97,15 +97,16 @@ module.exports = {
             var eventsEmbed = new Discord.MessageEmbed()
                 .setColor('#0099ff')
                 .setTitle('Eventos')
-                .setDescription('Eventos de este servidor');
+                .setURL('https://telek.tk')
+                .setDescription('Eventos de este servidor')
+                .setFooter('Puedes ver todos los eventos en formato calendario haciendo clic en el título.');
                 try {
                     var [results, fields] = await promisePool.query(`SELECT * FROM events WHERE server_id = ? order by eventDate`, [message.guild.id]);
                 } catch (err) {
                     console.log(err);
-                    console.log("mlem");
                 }
                 results.forEach(row => {
-                    eventsEmbed.addField(`${dateFormat(row.eventDate, 'paddedShortDate')}`, `${row.name}: ${row.description}`);
+                    eventsEmbed.addField(`${dateFormat(row.eventDate, 'paddedShortDate')}: ${row.name}`, `${row.description}`);
                 });
             if (results.length == 0) {
                 message.channel.send("No hay eventos. Puedes añadir un evento con el comando add")
@@ -117,14 +118,16 @@ module.exports = {
             var eventsEmbed = new Discord.MessageEmbed()
                 .setColor('#0099ff')
                 .setTitle('Eventos')
-                .setDescription('Tus eventos personales');
+                .setURL('https://telek.tk')
+                .setDescription('Tus eventos personales')
+                .setFooter('Puedes ver todos los eventos en formato calendario haciendo clic en el título.');
                 try {
                     var [results, fields] = await promisePool.query(`SELECT * FROM events WHERE user = ? AND server_id is null order by eventDate`, [message.author.id]);
                 } catch (err) {
                     console.log(err);
                 }
                 results.forEach(row => {
-                    eventsEmbed.addField(`${dateFormat(row.eventDate, 'paddedShortDate')}`, `${row.name}: ${row.description}`);
+                    eventsEmbed.addField(`${dateFormat(row.eventDate, 'paddedShortDate')}: ${row.name}`, `${row.description}`);
                 });
             if (results.length == 0) {
                 message.channel.send("No hay eventos. Puedes añadir un evento con el comando add")
@@ -140,12 +143,12 @@ module.exports = {
                 var helpEmbed = new Discord.MessageEmbed()
                 .setColor('#0099ff')
                 .setTitle('EzCal')
-                .setURL('https://github.com/JesusSePe/')
+                .setURL('https://telek.tk')
                 .setDescription('Utilidades')
                 .addFields(
                     { name: `${prefix} ping`, value:'Devuelve la latencia entre la API de Discord y este bot.'},
-                    { name: `${prefix} help`, value:'Devuelve todos los comandos agrupados por secciones.'},
-                    { name: `${prefix} invite`, value:'Devuelve el enlace para poder añadir el bot a un nuevo servidor.'},
+                    { name: `${prefix} ayuda`, value:'Devuelve todos los comandos agrupados por secciones.'},
+                    { name: `${prefix} invitacion`, value:'Devuelve el enlace para poder añadir el bot a un nuevo servidor.'},
                     { name: `${prefix} version`, value:'Devuelve la ultima version del bot.'}
                 )
                 .setTimestamp()
@@ -155,25 +158,47 @@ module.exports = {
                 var helpEmbed = new Discord.MessageEmbed()
                 .setColor('#0099ff')
                 .setTitle('EzCal')
-                .setURL('https://github.com/JesusSePe/')
+                .setURL('https://telek.tk')
                 .setDescription('Eventos')
-                .addField(
-                    { name: `${prefix} add`, value:'Añade un evento a la base de datos. Primero se envía el nombre, después la descripción y por último la fecha del evento. También se puede enviar la hora. La fecha y hora se guarda en formato GMT +00:00, de modo que puede variar la hora e incluso el día.'}
+                .addFields(
+                    { name: `${prefix} añadir`, value:'Añade un evento a la base de datos. Primero se envía el nombre, después la descripción y por último la fecha del evento. También se puede enviar la hora. La fecha y hora se guarda en formato GMT +00:00, de modo que puede variar la hora e incluso el día.'},
+                    { name: `${prefix} eventos`, value:'Devuelve los eventos de este servidor o DM.'}
                 )
+                .setTimestamp()
+                .setFooter('discal');
+            }
+            else if (args[0] === "todo"){
+                var helpEmbed = new Discord.MessageEmbed()
+                .setColor('#0099ff')
+                .setTitle('EzCal')
+                .setURL('https://telek.tk')
+                .setDescription('*Un comando para gobernarlos a todos*')
+                .addFields(
+                    { name: `${prefix} ping`, value:'Devuelve la latencia entre la API de Discord y este bot.'},
+                    { name: `${prefix} ayuda`, value:'Devuelve todos los comandos agrupados por secciones.'},
+                    { name: `${prefix} invitacion`, value:'Devuelve el enlace para poder añadir el bot a un nuevo servidor.'},
+                    { name: `${prefix} version`, value:'Devuelve la ultima version del bot.'},
+                    { name: `${prefix} añadir`, value:'Añade un evento a la base de datos. Primero se envía el nombre, después la descripción y por último la fecha del evento. También se puede enviar la hora. La fecha y hora se guarda en formato GMT +00:00, de modo que puede variar la hora e incluso el día.'},
+                    { name: `${prefix} eventos`, value:'Devuelve los eventos de este servidor o DM.'}
+                )
+                .setTimestamp()
+                .setFooter('discal');
             }
             else {
                 throw("Argumento no valido");
             }
+            
         }
         catch {
             var helpEmbed = new Discord.MessageEmbed()
             .setColor('#0099ff')
             .setTitle('EzCal')
-            .setURL('https://github.com/JesusSePe/')
+            .setURL('https://telek.tk')
             .setDescription('¡Bienvenido a EzCal, el bot calendario simple!')
             .addFields(
-                { name: 'Utilidades', value:`${prefix} help utilidades`},
-                { name: 'Eventos', value:`${prefix} help eventos`}
+                { name: 'utilidades', value:`${prefix} ayuda utilidades`},
+                { name: 'eventos', value:`${prefix} ayuda eventos`},
+                { name: 'todo', value:`${prefix} ayuda todo`}
             )
             .setTimestamp()
             .setFooter('EzCal');
